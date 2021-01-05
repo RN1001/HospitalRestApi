@@ -10,20 +10,22 @@ namespace HospitalRestApi.Models
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public Doctor AssignedDoctor { get; set; }
+        public List<Doctor> AssignedDoctors { get; set; }
+        public List<Nurse> AssignedNurses { get; set; }
 
         public Patient()
         {
 
         }
 
-        public Patient(int id, string firstname, string lastname, DateTime DOB, Doctor doctor)
+        public Patient(int id, string firstname, string lastname, DateTime DOB, List<Doctor> doctor, List<Nurse> nurses)
         {
             Id = id;
             Firstname = firstname;
             Lastname = lastname;
             DateOfBirth = DOB;
-            AssignedDoctor = doctor;
+            AssignedDoctors = doctor;
+            AssignedNurses = nurses;
         }
 
     }
