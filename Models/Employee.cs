@@ -7,15 +7,13 @@ using System.Threading.Tasks;
 
 namespace HospitalRestApi.Models
 {
-    abstract public class Employee
+    abstract public class Employee : BaseEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public DateTime DateOfBirth { get; set; }
-
+        public double Salary { get; set; }
+        public Location Location { get; set; }
+       
     }
 }

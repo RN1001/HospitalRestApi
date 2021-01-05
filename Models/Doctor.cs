@@ -7,7 +7,8 @@ namespace HospitalRestApi.Models
 {
     public class Doctor : Employee
     {
-        
+        public Specialism Specialism { get; set; }
+
         public List<Patient> Patients { get; set; }
 
         public Doctor()
