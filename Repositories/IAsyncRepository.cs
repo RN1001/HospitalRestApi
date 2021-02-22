@@ -10,8 +10,8 @@ namespace HospitalRestApi.Repositories
     {
         public Task<T> FindByIdAsync(int? id);
         public Task<List<T>> FindAllAsync();
-        public Task<T> CreateAsync(T t);
-        public Task<T> UpdateAsync(int? id, T t);
+        public Task<T> CreateAsync(T entity);
+        public Task<T> UpdateAsync(int? id, T entity);
         public Task<T> DeleteAsync(int? id);
     }
 }
