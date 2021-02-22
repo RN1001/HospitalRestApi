@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,9 +8,15 @@ namespace HospitalRestApi.Models
 {
     public class Doctor : Employee
     {
-        public Specialism Specialism { get; set; }
+        [ForeignKey("SpecilismId")]
+        public int SpecialismId { get; set; }
+        public virtual Specialism Specialism { get; set; }
 
-        public List<Patient> Patients { get; set; }
+        [ForeignKey("LocationId")]
+        public int LocationId { get; set; }
+        public virtual Location Location { get; set; }
+        
+        public virtual ICollection<Patient> Patients { get; set; }
 
         public Doctor()
         {

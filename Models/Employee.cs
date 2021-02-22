@@ -13,7 +13,5 @@ namespace HospitalRestApi.Models
         public string Lastname { get; set; }
         public DateTime DateOfBirth { get; set; }
         public double Salary { get; set; }
-        public Location Location { get; set; }
-       
     }
 }
