@@ -1,16 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using HospitalRestApi.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+using HospitalRestApi.Services;
 
 namespace HospitalRestApi
 {
@@ -26,8 +22,13 @@ namespace HospitalRestApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
+            services.AddResponseCompression();
+            services.AddDbContext<HospitalApiContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("HospitalApiContext")));
+            services.AddScoped<IPatientRepository, PatientRepository>();
+            services.AddScoped<IPatientService, PatientService>();
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
+            services.AddScoped<IDoctorService, DoctorService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HospitalRestApi", Version = "v1" });
@@ -49,6 +50,7 @@ namespace HospitalRestApi
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseResponseCompression();
 
             app.UseEndpoints(endpoints =>
             {

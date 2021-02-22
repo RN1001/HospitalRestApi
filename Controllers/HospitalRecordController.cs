@@ -1,6 +1,8 @@
 using HospitalRestApi.Models;
+using HospitalRestApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace HospitalRestApi.Controllers
 {
@@ -8,47 +10,62 @@ namespace HospitalRestApi.Controllers
     [Route("api/[controller]")]
     public class HospitalRecordController : ControllerBase
     {
-        [HttpGet, Route("Patients")]
-        public IEnumerable<Patient> GetPatients() 
+        private readonly IPatientService patientService;
+
+        public HospitalRecordController(IPatientService patientService)
         {
-            return new Patient[]
+            this.patientService = patientService;
+        }
+
+
+        [HttpGet, Route("patients")]
+        public async Task<IEnumerable<Patient>> GetPatients() 
+        {
+            return await this.patientService.FindAllPatients();
+        }
+
+        [HttpGet, Route("patient/{id}")]
+        public async Task<Patient> GetPatient(int? id) 
+        {
+            return await this.patientService.FindPatientById(id);
+        }
+
+        [HttpPost, Route("patient")]
+        public async Task<IActionResult> CreatePatient([FromBody] Patient patient)
+        {
+            if (!ModelState.IsValid)
             {
-                new Patient(
-                    1,
-                    "Raihaan",
-                    "Nazir",
-                    new System.DateTime(1993, 6, 9),
-                    new List<Doctor>()
-                    {
-                        new Doctor(1, "Eraj", "Arshad")
-                    },
-                    new List<Nurse>()
-                    {
-                        new Nurse(1, "Random", "Nurse")
-                    }
-                ),
-                new Patient(
-                    2,
-                    "Omair",
-                    "Nazir",
-                    new System.DateTime(1992, 4, 8),
-                    new List<Doctor>()
-                    {
-                        new Doctor(2, "Doctor", "Cool"),
-                        new Doctor(3, "Doctor", "Big man")
-                    },
-                    new List<Nurse>()
-               )
-            };
+                return BadRequest();
+            }
+            
+            await this.patientService.CreatePatient(patient);
+
+            return CreatedAtAction(nameof(GetPatient), new { id = patient.Id }, patient);
         }
 
-        [HttpGet, Route("Patient/{id}")]
-        public Patient GetPatient(int id) 
+        [HttpPut, Route("patient/{id}")]
+        public async Task<IActionResult> UpdatePatient(int? id, [FromBody] Patient patient)
         {
-            return new Patient();
+            var patientFound = await this.patientService.UpdatePatient(id, patient);
+            if (patientFound == null)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
         }
 
-
+        [HttpDelete, Route("patient/{id}")]
+        public async Task<IActionResult> DeletePatient(int? id)
+        {
+            var patient = await this.patientService.FindPatientById(id);
+            if (patient == null)
+            {
+                return BadRequest();
+            }
+            await this.patientService.DeletePatient(id);
+            return NoContent();
+        }
 
     }
 }
