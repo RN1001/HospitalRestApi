@@ -1,4 +1,5 @@
 ﻿using HospitalRestApi.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,31 +7,15 @@ using System.Threading.Tasks;
 
 namespace HospitalRestApi.Repositories
 {
-    public class PatientRepository : IPatientRepository
+    public class PatientRepository : EfRepository<Patient>, IPatientRepository
     {
-        public Task<Patient> CreateAsync(Patient t)
-        {
-            throw new NotImplementedException();
-        }
+        public readonly HospitalApiContext context;
 
-        public Task<Patient> DeleteAsync(int? id)
+        public PatientRepository(HospitalApiContext context) : base(context)
         {
-            throw new NotImplementedException();
+            this.context = context;
         }
-
-        public Task<List<Patient>> FindAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Patient> FindByIdAsync(int? id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Patient> UpdateAsync(int? id, Patient t)
-        {
-            throw new NotImplementedException();
-        }
+    
     }
+    
 }

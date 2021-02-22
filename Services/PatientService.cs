@@ -9,36 +9,36 @@ namespace HospitalRestApi.Services
 {
     public class PatientService : IPatientService
     {
-        private readonly IPatientRepository PatientRepository;
+        private readonly IPatientRepository patientRepository;
 
         public PatientService(IPatientRepository patientRepository)
         {
-            PatientRepository = patientRepository;
+            this.patientRepository = patientRepository;
         }
 
         public async Task<Patient> CreatePatient(Patient patient)
         {
-            return await this.PatientRepository.CreateAsync(patient);
+            return await this.patientRepository.CreateAsync(patient);
         }
 
-        public Task<Patient> DeletePatient(int? id)
+        public async Task<Patient> DeletePatient(int? id)
         {
-            throw new NotImplementedException();
+            return await this.patientRepository.DeleteAsync(id);
         }
 
-        public Task<List<Patient>> FindAllPatients()
+        public async Task<List<Patient>> FindAllPatients()
         {
-            throw new NotImplementedException();
+            return await this.patientRepository.FindAllAsync();
         }
 
-        public Task<Patient> FindPatientById(int? id)
+        public async Task<Patient> FindPatientById(int? id)
         {
-            throw new NotImplementedException();
+            return await this.patientRepository.FindByIdAsync(id);
         }
 
-        public Task<Patient> UpdatePatient(int? id, Patient patient)
+        public async Task<Patient> UpdatePatient(int? id, Patient patient)
         {
-            throw new NotImplementedException();
+            return await this.patientRepository.UpdateAsync(id, patient);
         }
     }
 }
