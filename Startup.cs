@@ -19,8 +19,6 @@ namespace HospitalRestApi
 
         public IConfiguration Configuration { get; }
 
-        readonly string origins = "origins";
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -31,19 +29,6 @@ namespace HospitalRestApi
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IDoctorService, DoctorService>();
-            services.AddScoped<ILocationRepository, LocationRepository>();
-            services.AddScoped<ILocationService, LocationService>();
-            services.AddScoped<ISpecialismRepository, SpecialismRepository>();
-            services.AddScoped<ISpecialismService, SpecialismService>();
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: origins, builder =>
-                {
-                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-                });
-            });
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HospitalRestApi", Version = "v1" });
@@ -64,9 +49,7 @@ namespace HospitalRestApi
 
             app.UseRouting();
 
-            app.UseCors(origins);
-
-                app.UseAuthorization();
+            app.UseAuthorization();
             app.UseResponseCompression();
 
             app.UseEndpoints(endpoints =>
