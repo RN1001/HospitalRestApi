@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using HospitalRestApi.Models;
 using HospitalRestApi.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalRestApi.Controllers
 {
+    [EnableCors("origins")]
     [ApiController]
     [Route("api")]
     public class SpecialismController : Controller

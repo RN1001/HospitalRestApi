@@ -11,7 +11,7 @@ namespace HospitalRestApi.Controllers
 {
     [EnableCors("origins")]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api")]
     public class LocationController : Controller
     {
         private readonly ILocationService _locationService;

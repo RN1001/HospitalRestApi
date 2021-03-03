@@ -6,11 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 
 namespace HospitalRestApi.Controllers
 {
+    [EnableCors("origins")]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api")]
     public class DoctorController : Controller
     {
         private readonly IDoctorService doctorService;

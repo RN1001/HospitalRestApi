@@ -3,16 +3,18 @@ using HospitalRestApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 
 namespace HospitalRestApi.Controllers
 {
+    [EnableCors("origins")]
     [ApiController]
-    [Route("api/[controller]")]
-    public class HospitalRecordController : ControllerBase
+    [Route("api")]
+    public class PatientController : ControllerBase
     {
         private readonly IPatientService patientService;
 
-        public HospitalRecordController(IPatientService patientService)
+        public PatientController(IPatientService patientService)
         {
             this.patientService = patientService;
         }
