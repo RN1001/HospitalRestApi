@@ -7,8 +7,9 @@ namespace HospitalRestApi.Models
         public string HospitalName { get; set; }
         public string Address { get; set; }
         public int MaximumBeds { get; set; }
-        public ICollection<Doctor> Doctors { get; set; }
-        public ICollection<Nurse> Nurses { get; set; }
+        public virtual ICollection<Doctor> Doctors { get; set; }
+        public virtual ICollection<Nurse> Nurses { get; set; }
+        public virtual ICollection<Patient> Patients { get; set; }
 
         public Location()
         {

@@ -5,9 +5,7 @@ namespace HospitalRestApi.Models
 {
     public class Nurse : Employee
     {
-
-        [ForeignKey("LocationId")]
-        public int LocationId { get; set; }
+        public int? LocationId { get; set; }
         public virtual Location Location { get; set; }
 
         public virtual ICollection<Patient> Patients { get; set; }

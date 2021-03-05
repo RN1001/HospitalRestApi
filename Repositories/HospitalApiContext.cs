@@ -24,18 +24,19 @@ namespace HospitalRestApi.Repositories
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Patient>()
-                .HasOne(doctor => doctor.AssignedDoctors)
-                .WithMany(patient => patient.Patients)
+                .HasOne(patient => patient.AssignedDoctor)
+                .WithMany(doctor => doctor.Patients)
                 .HasForeignKey(key => key.DoctorId);
 
             modelBuilder.Entity<Patient>()
-                .HasOne(nurse => nurse.AssignedNurses)
-                .WithMany(patient => patient.Patients)
+                .HasOne(patient => patient.AssignedNurse)
+                .WithMany(nurse => nurse.Patients)
                 .HasForeignKey(key => key.NurseId);
 
             modelBuilder.Entity<Specialism>()
                 .HasMany(specialism => specialism.Doctors)
-                .WithOne(doctor => doctor.Specialism);
+                .WithOne(doctor => doctor.Specialism)
+                .HasForeignKey(key => key.SpecialismId);
 
             modelBuilder.Entity<Location>()
                 .HasMany(hospital => hospital.Doctors)
@@ -45,6 +46,11 @@ namespace HospitalRestApi.Repositories
             modelBuilder.Entity<Location>()
                 .HasMany(hospital => hospital.Nurses)
                 .WithOne(nurse => nurse.Location)
+                .HasForeignKey(key => key.LocationId);
+
+            modelBuilder.Entity<Location>()
+                .HasMany(hospital => hospital.Patients)
+                .WithOne(patient => patient.Location)
                 .HasForeignKey(key => key.LocationId);
         }
 

@@ -8,12 +8,10 @@ namespace HospitalRestApi.Models
 {
     public class Doctor : Employee
     {
-        [ForeignKey("SpecilismId")]
-        public int SpecialismId { get; set; }
+        public int? SpecialismId { get; set; }
         public virtual Specialism Specialism { get; set; }
 
-        [ForeignKey("LocationId")]
-        public int LocationId { get; set; }
+        public int? LocationId { get; set; }
         public virtual Location Location { get; set; }
         
         public virtual ICollection<Patient> Patients { get; set; }

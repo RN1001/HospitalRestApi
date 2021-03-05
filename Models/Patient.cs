@@ -18,14 +18,14 @@ namespace HospitalRestApi.Models
         [Required]
         public DateTime DateOfBirth { get; set; }
 
-        [ForeignKey("doctor_id")]
-        public int DoctorId { get; set; }
-        public virtual Doctor AssignedDoctors { get; set; }
+        public int? DoctorId { get; set; }
+        public virtual Doctor AssignedDoctor { get; set; }
 
-        [ForeignKey("nurse_id")]
-        public int NurseId { get; set; }
-        public virtual Nurse AssignedNurses { get; set; }
+        public int? NurseId { get; set; }
+        public virtual Nurse AssignedNurse { get; set; }
 
+        public int? LocationId { get; set; }
+        public virtual Location Location { get; set; }
 
         public Patient()
         {
