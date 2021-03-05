@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalRestApi.Migrations
 {
     [DbContext(typeof(HospitalApiContext))]
-    [Migration("20210217235846_intialMigration")]
-    partial class intialMigration
+    [Migration("20210304203256_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,13 +37,13 @@ namespace HospitalRestApi.Migrations
                     b.Property<string>("Lastname")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LocationId")
+                    b.Property<int?>("LocationId")
                         .HasColumnType("int");
 
                     b.Property<double>("Salary")
                         .HasColumnType("float");
 
-                    b.Property<int>("SpecialismId")
+                    b.Property<int?>("SpecialismId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -115,7 +115,7 @@ namespace HospitalRestApi.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DoctorId")
+                    b.Property<int?>("DoctorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Firstname")
@@ -128,12 +128,17 @@ namespace HospitalRestApi.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("NurseId")
+                    b.Property<int?>("LocationId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NurseId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DoctorId");
+
+                    b.HasIndex("LocationId");
 
                     b.HasIndex("NurseId");
 
@@ -159,15 +164,11 @@ namespace HospitalRestApi.Migrations
                 {
                     b.HasOne("HospitalRestApi.Models.Location", "Location")
                         .WithMany("Doctors")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocationId");
 
                     b.HasOne("HospitalRestApi.Models.Specialism", "Specialism")
                         .WithMany("Doctors")
-                        .HasForeignKey("SpecialismId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SpecialismId");
 
                     b.Navigation("Location");
 
@@ -176,28 +177,32 @@ namespace HospitalRestApi.Migrations
 
             modelBuilder.Entity("HospitalRestApi.Models.Nurse", b =>
                 {
-                    b.HasOne("HospitalRestApi.Models.Location", null)
+                    b.HasOne("HospitalRestApi.Models.Location", "Location")
                         .WithMany("Nurses")
                         .HasForeignKey("LocationId");
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("HospitalRestApi.Models.Patient", b =>
                 {
-                    b.HasOne("HospitalRestApi.Models.Doctor", "AssignedDoctors")
+                    b.HasOne("HospitalRestApi.Models.Doctor", "AssignedDoctor")
                         .WithMany("Patients")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DoctorId");
 
-                    b.HasOne("HospitalRestApi.Models.Nurse", "AssignedNurses")
+                    b.HasOne("HospitalRestApi.Models.Location", "Location")
                         .WithMany("Patients")
-                        .HasForeignKey("NurseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocationId");
 
-                    b.Navigation("AssignedDoctors");
+                    b.HasOne("HospitalRestApi.Models.Nurse", "AssignedNurse")
+                        .WithMany("Patients")
+                        .HasForeignKey("NurseId");
 
-                    b.Navigation("AssignedNurses");
+                    b.Navigation("AssignedDoctor");
+
+                    b.Navigation("AssignedNurse");
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("HospitalRestApi.Models.Doctor", b =>
@@ -210,6 +215,8 @@ namespace HospitalRestApi.Migrations
                     b.Navigation("Doctors");
 
                     b.Navigation("Nurses");
+
+                    b.Navigation("Patients");
                 });
 
             modelBuilder.Entity("HospitalRestApi.Models.Nurse", b =>
