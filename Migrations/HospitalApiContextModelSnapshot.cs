@@ -19,6 +19,36 @@ namespace HospitalRestApi.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.1");
 
+            modelBuilder.Entity("HospitalRestApi.Models.Budgets", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("BudgetAddedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("DepartmentBudget")
+                        .HasColumnType("float");
+
+                    b.Property<double>("EquipmentBudget")
+                        .HasColumnType("float");
+
+                    b.Property<double>("StaffingBudget")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TrainingBudget")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TransportBudget")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Budgets");
+                });
+
             modelBuilder.Entity("HospitalRestApi.Models.Doctor", b =>
                 {
                     b.Property<int>("Id")
