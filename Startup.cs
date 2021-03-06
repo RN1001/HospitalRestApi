@@ -37,6 +37,8 @@ namespace HospitalRestApi
             services.AddScoped<ISpecialismService, SpecialismService>();
             services.AddScoped<INurseRepository, NurseRepository>();
             services.AddScoped<INurseService, NurseService>();
+            services.AddScoped<IBudgetRepository, BudgetsRepository>();
+            services.AddScoped<IBudgetService, BudgetService>();
 
             services.AddCors(options =>
             {

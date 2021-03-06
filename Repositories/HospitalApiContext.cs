@@ -18,6 +18,7 @@ namespace HospitalRestApi.Repositories
         public DbSet<Nurse> Nurses { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Specialism> Specialisms { get; set; }
+        public DbSet<Budgets> Budgets { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -52,6 +53,8 @@ namespace HospitalRestApi.Repositories
                 .HasMany(hospital => hospital.Patients)
                 .WithOne(patient => patient.Location)
                 .HasForeignKey(key => key.LocationId);
+
+
         }
 
     }
